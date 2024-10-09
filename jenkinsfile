@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                https://github.com/Raghavendraswamy/maven-example.git, branch: 'main' // Change to your repo URL and branch
+            }
+        }
+        stage('Build') {
+            steps {
+                sh './build.sh' // Modify based on your build script
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test' // Modify based on your test commands
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true // Change if needed
+        }
+    }
+}
